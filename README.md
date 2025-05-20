@@ -137,6 +137,8 @@ This project includes global VS Code settings to improve development experience 
 
 For detailed instructions on how to verify these settings are working correctly, see the `VS_CODE_SETTINGS_DOC.md` file.
 
+For a comprehensive list of all global files created outside this repository, see the `GLOBAL_FILES.md` file.
+
 **Quick verification steps**:
 
 1. **For GitHub Copilot instructions**: 
@@ -155,3 +157,5 @@ For detailed instructions on how to verify these settings are working correctly,
    # Check if global hooks are installed
    ls -la ~/.git-templates/hooks/
    ```
+
+For a comprehensive list of all global files and verification steps, see the `GLOBAL_FILES.md` document.
