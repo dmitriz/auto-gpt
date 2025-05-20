@@ -93,6 +93,12 @@ git init  # This applies the template, doesn't reinitialize
   - Sets up Git templates that will be used for all repositories
   - Only needs to be run once on your machine
 
+### Maintenance of Git hooks
+
+- These scripts are deliberately simple and minimal
+- No need to make the scripts executable - they are called with `bash`
+- Keep the logic in these files to avoid fragmentation
+
 ### Alternative: Using git-secret
 
 For more advanced encryption of sensitive files:
@@ -104,3 +110,27 @@ For more advanced encryption of sensitive files:
 5. Encrypt files: `git secret hide`
 
 The encrypted files (.env.secret) can be safely committed.
+
+## VS Code Settings
+
+This project includes global VS Code settings to improve development experience and enforce coding standards.
+
+### Key global settings
+
+1. `"github.copilot.enable": { "*": true }`
+   - Purpose: Enables GitHub Copilot globally for all workspaces
+   - Effect: Ensures Copilot is active in every project
+   - Format: Uses an object with "*" wildcard to apply to all file types, not just a boolean value
+
+2. `"github.copilot.customization.instructionsPath": "~/.vscode/github-copilot-instructions.md"`
+   - Purpose: Points to the file containing custom instructions for Copilot
+   - Effect: Makes Copilot follow specific coding guidelines in all projects
+   - Note: VS Code doesn't automatically look for instructions in the .vscode folder; explicit path is required
+
+3. `"files.exclude": { "**/.git": false }`
+   - Purpose: Makes the .git directory visible in the VS Code explorer
+   - Effect: Allows you to see and edit Git hooks directly in the VS Code interface
+
+### Verifying settings are working
+
+For detailed instructions on how to verify these settings are working correctly, see the `VS_CODE_SETTINGS_DOC.md` file.
