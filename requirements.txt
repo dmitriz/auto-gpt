@@ -1,4 +1,14 @@
+# Project dependencies for the Web Agent
+# Core packages needed to run the web browsing and question-answering functionality
+
+# OpenAI API client for GPT integration
 openai
+
+# HTTP client for fetching webpages
 requests
+
+# HTML parsing library
 beautifulsoup4
+
+# Environment variable management for API keys
 python-dotenv

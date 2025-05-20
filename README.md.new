@@ -1,0 +1,91 @@
+# Web Agent
+
+A simple Python project that mimics AutoGPT's ability to browse websites and answer questions about them using OpenAI GPT.
+
+## Features
+
+- Fetches and parses a webpage using `requests` and `BeautifulSoup`
+- Extracts visible text from the page
+- Uses OpenAI GPT (via API) to answer user questions about the page content
+- CLI interface: provide a URL and a question
+
+## Setup
+
+1. Clone the repository
+
+2. Create a `.env` file with your OpenAI API key:
+
+   ```plaintext
+   OPENAI_API_KEY=your_api_key_here
+   ```
+   
+   Alternatively, copy from the template:
+
+   ```bash
+   cp .env.example .env
+   # Then edit .env to add your API key
+   ```
+
+3. Install dependencies:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. Set up security hooks to prevent accidentally committing your API key:
+
+   ```bash
+   make setup-secrets
+   ```
+
+## Usage
+
+You can run the web agent in several ways:
+
+### Using Make commands
+
+```bash
+# Basic example
+make run
+
+# Wikipedia AI article
+make run-wikipedia
+
+# Hacker News
+make run-news
+
+# Custom URL and question
+make run-custom URL="https://example.com" QUESTION="What is this page about?"
+```
+
+### Using Python directly
+
+```bash
+python main.py "https://example.com" "What is the main topic?"
+```
+
+### Using the convenience script
+
+```bash
+bash run_web_agent.sh
+```
+
+## Project Structure
+
+- `main.py`: CLI entry point and argument parsing
+- `browser.py`: Handles webpage scraping and text extraction
+- `ask_llm.py`: Handles OpenAI GPT API queries
+- `.env.example`: Template for environment variables (API keys)
+- `requirements.txt`: Project dependencies
+- `Makefile`: Contains helpful commands for setup and running
+- `scripts/`: Contains security hooks for protecting API keys
+
+## Security Measures
+
+This project includes Git hooks to prevent accidentally committing API keys:
+
+- Blocks `.env` files from being committed
+- Prevents committing directly to main/master branch
+- Scans for potential API keys in staged files
+
+For details on these security measures, see the [scripts/README.md](scripts/README.md)
