@@ -1,8 +1,8 @@
-import requests
 from bs4 import BeautifulSoup
+from security import safe_requests
 
 def fetch_visible_text(url):
-    response = requests.get(url)
+    response = safe_requests.get(url)
     response.raise_for_status()
     soup = BeautifulSoup(response.text, 'html.parser')
     # Remove script and style elements
