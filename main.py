@@ -2,6 +2,7 @@
 # This script ties together the web browser and language model components
 
 import argparse
+import sys
 from browser import fetch_visible_text
 from ask_llm import ask_gpt
 

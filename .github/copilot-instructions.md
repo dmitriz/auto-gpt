@@ -10,10 +10,16 @@
    - Even if a task seems simple or obvious, ASK FIRST before implementing
    - Example: If asked to extract a module, first propose a plan and wait for approval
 
-2. **Focus on the exact requested task** - complete it in the fastest possible way without getting distracted
-3. **Do not deviate from what is explicitly asked** - if in doubt, ask for clarification
+2. **FOCUS ON THE EXACT REQUESTED TASK**: 
+   - Complete it in the fastest possible way without getting distracted
+   - Stay focused on only what was asked
+   - Break complex tasks into manageable steps
 
-## Code Quality Rules
+3. **DO NOT DEVIATE FROM WHAT IS EXPLICITLY ASKED**: 
+   - If in doubt, ask for clarification
+   - Don't add extra features or modifications
+   - Follow instructions precisely as given
+
 ## Code Quality Rules
 
 4. **Provide extensive comments for all code** - explain each line or block of code clearly

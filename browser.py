@@ -14,8 +14,8 @@ def fetch_visible_text(url):
     Returns:
         str: The visible text content of the webpage
     """
-    # Send HTTP GET request to the URL
-    response = requests.get(url)
+    # Send HTTP GET request to the URL with a 10-second timeout
+    response = requests.get(url, timeout=10)
     
     # Raise an exception for 4XX/5XX status codes
     response.raise_for_status()
