@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 # Script to set up global Git hooks for all repositories
 # Creates hooks in your global Git template directory
 # After running this, ALL new and existing Git repositories will use these hooks
@@ -37,7 +38,7 @@ if [ "$BRANCH" = "main" ] || [ "$BRANCH" = "master" ]; then
 fi
 
 # Prevent committing .env files but allow .env.example
-if git diff --cached --name-only | grep -E '\.env$'; then
+if git diff --cached --name-only | grep -q -E '\.env$'; then
   show_error "Attempting to commit .env file, which may contain secrets." "Remove this file with: git reset .env"
 fi
 
