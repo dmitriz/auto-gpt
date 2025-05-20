@@ -20,6 +20,13 @@
    - Don't add extra features or modifications
    - Follow instructions precisely as given
 
+4. **VERIFY ALL CHANGES THOROUGHLY BEFORE CONSIDERING A TASK COMPLETE**:
+   - Check for syntax errors, linting issues, and import errors
+   - Test all modified files to ensure they work as expected
+   - Validate imports and dependencies are resolved properly
+   - Never declare a task complete until verification shows all issues are fixed
+   - If problems are found, fix them immediately before moving forward
+
 ## Code Quality Rules
 
 4. **Provide extensive comments for all code** - explain each line or block of code clearly
@@ -40,6 +47,10 @@
 1. **Planning Phase**: Always begin with planning - create plans but don't execute them until approved
 2. **Approval Phase**: Explicitly wait for approval before making any actual changes to files
 3. **Implementation Phase**: Implement only what was approved, one step at a time
-4. **Verification Phase**: Verify each change works correctly before continuing
+4. **Verification Phase**: Verify each change works correctly before moving to the next step
+   - Run tests and linters to catch any issues
+   - Check imports work properly across all affected files
+   - Ensure there are no runtime errors
+5. **Completion Phase**: Only mark a task as complete after thorough verification of all changes
 
 Remember: When in doubt, ASK first rather than assuming or implementing!
