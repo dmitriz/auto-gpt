@@ -67,6 +67,8 @@ cd /path/to/existing/repo
 git init  # This applies the template, doesn't reinitialize
 ```
 
+For detailed verification steps and understanding how these hooks work, see the `VS_CODE_SETTINGS_DOC.md` file.
+
 ### How the Git hooks work
 
 - The scripts use Git hooks to check files before they're committed
@@ -134,3 +136,22 @@ This project includes global VS Code settings to improve development experience 
 ### Verifying settings are working
 
 For detailed instructions on how to verify these settings are working correctly, see the `VS_CODE_SETTINGS_DOC.md` file.
+
+**Quick verification steps**:
+
+1. **For GitHub Copilot instructions**: 
+
+   ```bash
+   # Check if the path is correctly set in settings
+   cat ~/.config/Code/User/settings.json | grep instructionsPath
+   
+   # Verify the instructions file exists
+   cat ~/.vscode/github-copilot-instructions.md | head -3
+   ```
+
+2. **For Git hooks**:
+
+   ```bash
+   # Check if global hooks are installed
+   ls -la ~/.git-templates/hooks/
+   ```

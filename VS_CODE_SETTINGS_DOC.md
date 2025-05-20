@@ -1,11 +1,4 @@
-# VS Code Glo1. `"github.copilot.enable": { "*": true }`
-
-- Purpose: Enables GitHub Copilot globally for all workspaces
-- Effect: Ensures Copilot is active in every project
-- Note: While Copilot is enabled by default upon installation, this setting is important because 
-     Copilot can be accidentally disabled at various scopes (workspace, language, etc.). Setting it 
-     explicitly to true in global settings ensures it remains enabled.
-- Format: Uses an object with "*" wildcard to apply to all file types, not just a boolean valuettings Documentation
+# VS Code Global Settings Documentation
 
 This document explains the purpose of the global VS Code settings that were set up.
 
@@ -97,6 +90,16 @@ The settings.json file contains three important settings:
 3. **About existing repositories**:
 
    For repositories created before setting up global hooks, you need to run `git init` once in each repository to apply the hooks. After that, all new repositories you create will automatically have these hooks.
+   
+   **Activating the global Git hooks**:
+
+   ```bash
+   # This only needs to be done once - run this from the project directory
+   make setup-global-hooks
+   
+   # Then verify it worked
+   ls -la ~/.git-templates/hooks/
+   ```
    
    **How global Git hooks work**:
    - The `git config --global init.templateDir ~/.git-templates` command sets a permanent, user-level configuration
