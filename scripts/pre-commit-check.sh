@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
 # Simple pre-commit script to prevent accidental commit of .env files
 # This file should be kept in scripts/pre-commit-check.sh
 # It is called by the Git hook at .git/hooks/pre-commit
@@ -11,7 +12,7 @@ show_error() {
 }
 
 # Check if trying to commit to main/master branch
-BRANCH=$(git symbolic-ref HEAD 2>/dev/null | cut -d'/' -f3)
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
 if [ "$BRANCH" = "main" ] || [ "$BRANCH" = "master" ]; then
   show_error "Committing directly to $BRANCH branch is not allowed." "Create a feature branch and make a pull request instead."
 fi
