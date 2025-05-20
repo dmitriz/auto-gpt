@@ -11,6 +11,8 @@ mkdir -p "$HOOKS_DIR"
 
 # Tell Git to use this template directory
 # This configures Git to copy all files from this directory when initializing a repository
+# This is a permanent, user-level setting that's stored in ~/.gitconfig
+# You only need to run this command once, and it will apply to all future git init operations
 git config --global init.templateDir "$HOME/.git-templates"
 
 # Create global pre-commit hook

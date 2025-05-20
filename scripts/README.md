@@ -40,6 +40,15 @@ git init  # This applies the template, doesn't reinitialize
 - All logic is in version-controlled scripts for transparency
 - The global setup affects all repositories on your machine
 
+### Global Git hooks technical details
+
+- Git uses a "template directory" that contains files copied to new repositories during initialization
+- The command `git config --global init.templateDir ~/.git-templates` sets this directory globally
+- This is a permanent, user-level setting stored in your `~/.gitconfig` file
+- For existing repositories, running `git init` again is safe and only copies the template files
+- The setting applies to all future Git operations on your machine
+- The hooks in the template directory are copied to each repository's `.git/hooks/` folder
+
 ## Files in this directory
 
 - **pre-commit-check.sh**: The main script that contains all checks

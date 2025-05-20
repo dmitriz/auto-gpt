@@ -14,10 +14,16 @@ The settings.json file contains three important settings:
 1. `"github.copilot.enable": true`
    - Purpose: Enables GitHub Copilot globally for all workspaces
    - Effect: Ensures Copilot is active in every project
+   - Note: While Copilot is enabled by default upon installation, this setting is important because 
+     Copilot can be accidentally disabled at various scopes (workspace, language, etc.). Setting it 
+     explicitly to true in global settings ensures it remains enabled.
 
 2. `"github.copilot.customization.instructionsPath": "~/.vscode/github-copilot-instructions.md"`
    - Purpose: Points to the file containing your custom instructions for Copilot
    - Effect: Makes Copilot follow your specific guidelines in all projects
+   - Note: This setting is necessary because VS Code doesn't automatically look for instructions 
+     in the .vscode folder. You must explicitly specify the path to your instructions file, even 
+     though ~/.vscode is a standard location. Without this setting, your instructions would be ignored.
 
 3. `"files.exclude": { "**/.git": false }`
    - Purpose: Makes the .git directory visible in the VS Code explorer
@@ -83,6 +89,12 @@ The settings.json file contains three important settings:
 3. **About existing repositories**:
 
    For repositories created before setting up global hooks, you need to run `git init` once in each repository to apply the hooks. After that, all new repositories you create will automatically have these hooks.
+   
+   **How global Git hooks work**:
+   - The `git config --global init.templateDir ~/.git-templates` command sets a permanent, user-level configuration
+   - This setting tells Git to copy files from the template directory whenever `git init` is run
+   - You only need to set this configuration once, and it applies to all future repository initializations
+   - The setting is stored in your global Git config (~/.gitconfig) and persists across sessions
 
 ## Advanced customization
 
