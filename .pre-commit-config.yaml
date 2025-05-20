@@ -1,0 +1,15 @@
+# Simple pre-commit configuration (OPTIONAL)
+# This file is only needed if you want to use the pre-commit framework
+# Our Git hooks work fine without it
+# If you don't need this file, you can safely delete it
+
+# The 'repos' section defines which repositories to pull hooks from
+repos:
+# Just use a single hook that calls our script
+-   repo: local
+    hooks:
+    -   id: check-for-secrets
+        name: Check for API keys and secrets
+        entry: bash scripts/pre-commit-check.sh
+        language: script
+        pass_filenames: false
