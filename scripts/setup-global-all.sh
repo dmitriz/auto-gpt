@@ -86,35 +86,51 @@ if [ -f "$VS_CODE_SETTINGS" ]; then
   
   # Read the existing settings
   if command -v jq > /dev/null; then
+    # Create a temporary file for the jq output
+    TEMP_SETTINGS=$(mktemp)
+    
     # Use jq if available for proper merging
     jq --arg path "$HOME/.vscode/github-copilot-instructions.md" '. + {
       "github.copilot.enable": {"*": true}, 
       "github.copilot.customization.instructionsPath": $path,
       "files.exclude": {"**/.git": false}
-    }' "$VS_CODE_SETTINGS.bak" > "$VS_CODE_SETTINGS"
+    }' "$VS_CODE_SETTINGS.bak" > "$TEMP_SETTINGS"
+    
+    # Atomically move the temporary file to the destination
+    mv "$TEMP_SETTINGS" "$VS_CODE_SETTINGS"
   else
     # Simple approach if jq is not available
     echo "Warning: jq not found, using a simplified approach"
     
+    # Create a temporary file for our settings
+    TEMP_SETTINGS=$(mktemp)
+    
     # Create a new settings file with our settings
-    cat > "$VS_CODE_SETTINGS" << EOL
+    cat > "$TEMP_SETTINGS" << EOL
 {
     "github.copilot.enable": { "*": true },
     "github.copilot.customization.instructionsPath": "~/.vscode/github-copilot-instructions.md",
     "files.exclude": { "**/.git": false }
 }
 EOL
+    # Atomically move the temporary file to the destination
+    mv "$TEMP_SETTINGS" "$VS_CODE_SETTINGS"
     echo "Note: This replaces your existing settings. The backup is at $VS_CODE_SETTINGS.bak"
   fi
 else
+  # Create a temporary file for our settings
+  TEMP_SETTINGS=$(mktemp)
+  
   # Create a new settings file
-  cat > "$VS_CODE_SETTINGS" << EOL
+  cat > "$TEMP_SETTINGS" << EOL
 {
     "github.copilot.enable": { "*": true },
     "github.copilot.customization.instructionsPath": "~/.vscode/github-copilot-instructions.md",
     "files.exclude": { "**/.git": false }
 }
 EOL
+  # Atomically move the temporary file to the destination
+  mv "$TEMP_SETTINGS" "$VS_CODE_SETTINGS"
 fi
 
 print_success "Configured VS Code settings: $VS_CODE_SETTINGS"
