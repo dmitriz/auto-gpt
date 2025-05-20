@@ -1,167 +1,72 @@
-# Migration Plan: Extracting Reusable Components
+# Simplified Migration Plan: Extracting Reusable Components
 
-This document outlines a systematic, step-by-step plan to extract generic functionality from the current project into separate, reusable modules. The plan emphasizes small, incremental changes to ensure functionality remains intact throughout the migration process.
+## CORE PRINCIPLES - READ FIRST
 
-## Current Project Structure Analysis
+1. **ONE COMPONENT AT A TIME**: We will extract, test, and complete ONLY ONE component fully before starting on any other component. This is the most important rule.
 
-The current project consists of several components:
+2. **ABSOLUTE MINIMUM CHANGES**: Each step will make the smallest possible change (often just one file). No premature directory structures or files.
 
-1. **Web Agent Core** (main.py, run_web_agent.sh)
-   - Application-specific entry point and CLI handling
+3. **UNIVERSAL REUSABILITY**: Each component must work independently of our original project and be usable in any other project.
 
-2. **Web Scraping Module** (browser.py)
-   - Generic web page fetching and text extraction
+4. **CONTINUOUS VALIDATION**: We will test after EVERY single change, no matter how small, to ensure functionality is preserved.
 
-3. **LLM Integration Module** (ask_llm.py)
-   - Generic OpenAI API integration
+5. **NO PREMATURE OPTIMIZATION**: We will first focus on making each component work correctly before improving its structure, documentation, or packaging.
 
-4. **Development Utilities**
-   - Git hooks (scripts/pre-commit-check.sh)
-   - Global setup scripts (scripts/setup-global-hooks.sh, scripts/setup-global-all.sh)
-   - Documentation (VS_CODE_SETTINGS_DOC.md, GLOBAL_FILES.md)
-   - Project automation (Makefile)
+This document provides a detailed, step-by-step plan to extract reusable functionality from our project. Each component will be completed fully before moving to the next one.
 
-## Migration Plan: Small, Incremental Steps
+## Identifying the Simplest Component to Extract First
 
-### Phase 1: Prepare the Repository Structure (Week 1)
+After analyzing the codebase, the **Web Scraping Module (browser.py)** is the most self-contained and easiest component to extract first:
 
-1. **Create a repos subdirectory structure**
-   - `mkdir -p libs/{web-scraper,llm-client,git-hooks,vs-code-utils}`
-   - This establishes placeholders for the future independent modules
-   - Small step: Just creating directories, no code changes
+1. It has minimal dependencies (only requires requests and BeautifulSoup)
+2. It has a clear, single responsibility (fetching and parsing web pages)
+3. It's already well-encapsulated with a clean API (one main function)
+4. It's generally useful in many projects beyond this specific application
 
-2. **Create minimal README files in each subdirectory**
-   - Document the intended purpose of each module
-   - Small step: Just documentation, no code changes
+We will NOT begin any other component extraction until this one is completely finished.
 
-3. **Create minimal setup.py files in each subdirectory**
-   - Define basic package metadata for future Python packages
-   - Small step: Just scaffolding, no code movement
+The other components we'll extract later (in order of complexity, but only one at a time):
 
-### Phase 2: Extract Web Scraper Module (Week 2)
+1. LLM Integration Module (ask_llm.py)
+2. Git Hooks Utilities (scripts/pre-commit-check.sh)
+3. VS Code Utilities (from setup-global-all.sh)
 
-1. **Copy browser.py to libs/web-scraper**
-   - `cp browser.py libs/web-scraper/web_scraper.py`
-   - Small step: Just copying, original functionality untouched
+## Step 1: Extract Web Scraper Module
 
-2. **Refactor the web-scraper module**
-   - Rename functions to match new module name
-   - Add proper package documentation
-   - Create tests
-   - Small step: Working on the copy, original remains functional
+1. **Create a single directory for the extracted module**
+   - `mkdir -p web-scraper`
+   - This is the only new directory needed to start
 
-3. **Update the original browser.py**
-   - Modify to import from the new module
-   - Initially, re-export the same functionality
-   - Small step: Maintaining backward compatibility
+2. **Copy browser.py to web-scraper with minimal changes**
+   - `cp browser.py web-scraper/web_scraper.py`
+   - Rename the file to match the new module purpose
+   - No functionality changes yet
 
-4. **Test the unchanged application**
-   - Verify the original application still works
-   - Small step: Validating the changes preserve functionality
+3. **Create minimal package structure**
+   - Create `web-scraper/__init__.py` to expose the module
+   - Create `web-scraper/setup.py` with only essential metadata
+   - No README or extra files at this stage
 
-### Phase 3: Extract LLM Client Module (Week 3)
+4. **Test the extracted module independently**
+   - Create a simple test script that imports and uses the new module
+   - Verify it works exactly the same as the original
 
-1. **Copy ask_llm.py to libs/llm-client**
-   - `cp ask_llm.py libs/llm-client/llm_client.py`
-   - Small step: Just copying, original functionality untouched
+5. **Update original browser.py to use the new module**
+   - Modify to import the functionality from the new location
+   - Maintain exact same behavior and API
+   - This ensures main application still works without changes
 
-2. **Refactor the llm-client module**
-   - Generalize the interface for different models
-   - Add proper package documentation
-   - Create tests
-   - Small step: Working on the copy, original remains functional
+## Running Tests After Each Step
 
-3. **Update the original ask_llm.py**
-   - Modify to import from the new module
-   - Initially, re-export the same functionality
-   - Small step: Maintaining backward compatibility
+For each change above:
 
-4. **Test the unchanged application**
-   - Verify the original application still works
-   - Small step: Validating the changes preserve functionality
+1. Run the original application to ensure it still works
+2. Only move to the next step if the current one is successful
+3. If something breaks, immediately revert to the working state
 
-### Phase 4: Extract Git Hooks Utilities (Week 4)
+## Next Component to Extract (Only After Web Scraper is Done)
 
-1. **Copy Git hook scripts to libs/git-hooks**
-   - `cp scripts/setup-global-hooks.sh libs/git-hooks/`
-   - `cp scripts/pre-commit-check.sh libs/git-hooks/`
-   - Small step: Just copying, original functionality untouched
-
-2. **Refactor the Git hooks scripts**
-   - Make them more configurable and reusable
-   - Add proper documentation
-   - Small step: Working on copies, originals remain functional
-
-3. **Update the original scripts**
-   - Modify to reference or import from the new module
-   - Small step: Maintaining backward compatibility
-
-4. **Test the unchanged functionality**
-   - Verify the Git hooks still work as expected
-   - Small step: Validating the changes preserve functionality
-
-### Phase 5: Extract VS Code Utilities (Week 5)
-
-1. **Copy VS Code setup scripts to libs/vs-code-utils**
-   - Extract VS Code setup functionality from scripts/setup-global-all.sh
-   - Small step: Extract and refactor one piece at a time
-
-2. **Refactor the VS Code utilities**
-   - Make them more configurable and reusable
-   - Add proper documentation
-   - Small step: Working on copies, originals remain functional
-
-3. **Update the original scripts**
-   - Modify to reference or import from the new module
-   - Small step: Maintaining backward compatibility
-
-4. **Test the unchanged functionality**
-   - Verify the VS Code setup still works as expected
-   - Small step: Validating the changes preserve functionality
-
-### Phase 6: Package and Publish (Week 6-8)
-
-For each extracted module:
-
-1. **Complete package structure**
-   - Add proper **init**.py files
-   - Finalize setup.py with dependencies
-   - Add license and contribution guides
-   - Small step: One module at a time
-
-2. **Create tests for each package**
-   - Add unit tests for critical functionality
-   - Add CI configuration
-   - Small step: One module at a time
-
-3. **Document usage**
-   - Create detailed README with examples
-   - Add docstrings and type hints
-   - Small step: One module at a time
-
-4. **Test independent modules**
-   - Verify each module works independently
-   - Small step: One module at a time
-
-5. **Publish to PyPI or internal repository**
-   - Register package name
-   - Publish initial version
-   - Small step: One module at a time, starting with the most stable
-
-### Phase 7: Transition the Main Application (Week 9-10)
-
-1. **Update dependencies**
-   - Update requirements.txt to use the published packages
-   - Small step: One dependency at a time
-
-2. **Refactor main application**
-   - Update imports to use the published packages
-   - Remove any unnecessary code
-   - Small step: One module at a time
-
-3. **Expand functionality**
-   - Add new features using the modular components
-   - Small step: One feature at a time
+Once the web scraper module is fully extracted and tested, we'll extract the LLM integration (ask_llm.py) using the same minimalist approach.
 
 ## Validation Steps for Each Change
 
@@ -179,16 +84,8 @@ For each step:
 
 1. **Keep original files** until new structure is confirmed working
 2. **Maintain backward compatibility** with wrapper modules
-3. **Document specific rollback steps** for each phase
-4. **Use Git branching** to easily revert changes
-
-## Timeline and Progress Tracking
-
-- Each phase estimated at 1-2 weeks
-- Total migration time: 10-12 weeks
-- Track progress in a simple spreadsheet or project board
-- Weekly status updates to stakeholders
+3. **Use Git branching** to easily revert changes
 
 ## Conclusion
 
-This migration plan provides a systematic approach to extracting reusable components while ensuring the application remains functional throughout the process. By taking small, incremental steps with thorough validation at each stage, we can safely transition to a more modular and maintainable codebase.
+This simplified migration plan focuses on extracting one component at a time, starting with the simplest one - the web scraper module. By taking small, incremental steps with thorough validation at each stage, we minimize risk while gradually transforming the codebase into reusable modules.
