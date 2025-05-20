@@ -1,3 +1,4 @@
+<!-- filepath: /home/z/repos/auto-gpt/README.md -->
 # Web Agent
 
 A simple Python project that mimics AutoGPT's ability to browse websites and answer questions about them using OpenAI GPT.
@@ -93,14 +94,32 @@ git init  # This applies the template, doesn't reinitialize
   - Sets up Git templates that will be used for all repositories
   - Only needs to be run once on your machine
 
-### Alternative: Using git-secret
+### Maintenance of Git hooks
 
-For more advanced encryption of sensitive files:
+- These scripts are deliberately simple and minimal
+- No need to make the scripts executable - they are called with `bash`
+- Keep the logic in these files to avoid fragmentation
 
-1. Install git-secret (<https://git-secret.io/>)
-2. Initialize: `git secret init`
-3. Add allowed users: `git secret tell your@email.com`
-4. Add files to hide: `git secret add .env`
-5. Encrypt files: `git secret hide`
+## VS Code Settings
 
-The encrypted files (.env.secret) can be safely committed.
+This project includes global VS Code settings to improve development experience and enforce coding standards.
+
+### Key global settings
+
+1. `"github.copilot.enable": { "*": true }`
+   - Purpose: Enables GitHub Copilot globally for all workspaces
+   - Effect: Ensures Copilot is active in every project
+   - Format: Uses an object with "*" wildcard to apply to all file types, not just a boolean value
+
+2. `"github.copilot.customization.instructionsPath": "~/.vscode/github-copilot-instructions.md"`
+   - Purpose: Points to the file containing custom instructions for Copilot
+   - Effect: Makes Copilot follow specific coding guidelines in all projects
+   - Note: VS Code doesn't automatically look for instructions in the .vscode folder; explicit path is required
+
+3. `"files.exclude": { "**/.git": false }`
+   - Purpose: Makes the .git directory visible in the VS Code explorer
+   - Effect: Allows you to see and edit Git hooks directly in the VS Code interface
+
+### Verifying settings are working
+
+For detailed instructions on how to verify these settings are working correctly, see the `VS_CODE_SETTINGS_DOC.md` file.

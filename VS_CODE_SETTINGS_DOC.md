@@ -1,4 +1,11 @@
-# VS Code Global Settings Documentation
+# VS Code Glo1. `"github.copilot.enable": { "*": true }`
+
+- Purpose: Enables GitHub Copilot globally for all workspaces
+- Effect: Ensures Copilot is active in every project
+- Note: While Copilot is enabled by default upon installation, this setting is important because 
+     Copilot can be accidentally disabled at various scopes (workspace, language, etc.). Setting it 
+     explicitly to true in global settings ensures it remains enabled.
+- Format: Uses an object with "*" wildcard to apply to all file types, not just a boolean valuettings Documentation
 
 This document explains the purpose of the global VS Code settings that were set up.
 
@@ -11,12 +18,13 @@ This document explains the purpose of the global VS Code settings that were set 
 
 The settings.json file contains three important settings:
 
-1. `"github.copilot.enable": true`
+1. `"github.copilot.enable": { "*": true }`
    - Purpose: Enables GitHub Copilot globally for all workspaces
    - Effect: Ensures Copilot is active in every project
    - Note: While Copilot is enabled by default upon installation, this setting is important because 
      Copilot can be accidentally disabled at various scopes (workspace, language, etc.). Setting it 
      explicitly to true in global settings ensures it remains enabled.
+   - Format: Uses an object with "*" wildcard to apply to all file types, not just a boolean value
 
 2. `"github.copilot.customization.instructionsPath": "~/.vscode/github-copilot-instructions.md"`
    - Purpose: Points to the file containing your custom instructions for Copilot
