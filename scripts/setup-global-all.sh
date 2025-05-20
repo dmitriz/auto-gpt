@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 # Global setup script to create all necessary files outside this repository
 # This script creates and configures:
 # 1. GitHub Copilot global instructions

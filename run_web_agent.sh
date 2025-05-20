@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 
 # Activate virtual environment if exists
 if [ -d "venv" ]; then

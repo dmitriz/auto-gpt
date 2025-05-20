@@ -31,7 +31,7 @@ show_error() {
 }
 
 # Check if trying to commit to main/master branch
-BRANCH=$(git symbolic-ref HEAD 2>/dev/null | cut -d'/' -f3)
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
 if [ "$BRANCH" = "main" ] || [ "$BRANCH" = "master" ]; then
   show_error "Committing directly to $BRANCH branch is not allowed." "Create a feature branch and make a pull request instead."
 fi
@@ -46,6 +46,12 @@ PROJECT_HOOK="$(git rev-parse --show-toplevel)/scripts/pre-commit-check.sh"
 if [ -f "$PROJECT_HOOK" ]; then
   # Run the project's hook with bash (no need to make it executable)
   bash "$PROJECT_HOOK"
+  # Capture the exit status
+  HOOK_STATUS=$?
+  # If the project hook failed, exit with the same status code
+  if [ $HOOK_STATUS -ne 0 ]; then
+    exit $HOOK_STATUS
+  fi
 fi
 
 exit 0
