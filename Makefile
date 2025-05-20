@@ -1,13 +1,15 @@
-.PHONY: setup run run-wikipedia run-news run-custom help
+.PHONY: setup run run-wikipedia run-news run-custom setup-secrets setup-global-hooks help
 
 help:
 	@echo "Available commands:"
-	@echo "  make setup           - Set up the virtual environment and install dependencies"
-	@echo "  make run             - Run with example.com and a basic question"
-	@echo "  make run-wikipedia   - Run with Wikipedia AI article"
-	@echo "  make run-news        - Run with Hacker News"
-	@echo "  make run-custom      - Run with custom URL and question (requires URL= and QUESTION= parameters)"
-	@echo "  make help            - Show this help message"
+	@echo "  make setup               - Set up the virtual environment and install dependencies"
+	@echo "  make setup-secrets       - Install local Git hook to prevent committing secrets"
+	@echo "  make setup-global-hooks  - Install global Git hooks for all repositories"
+	@echo "  make run                 - Run with example.com and a basic question"
+	@echo "  make run-wikipedia       - Run with Wikipedia AI article"
+	@echo "  make run-news            - Run with Hacker News"
+	@echo "  make run-custom          - Run with custom URL and question (requires URL= and QUESTION= parameters)"
+	@echo "  make help                - Show this help message"
 
 setup:
 	python -m venv venv
@@ -29,3 +31,17 @@ run-custom:
 		exit 1; \
 	fi
 	. venv/bin/activate && python main.py "$(URL)" "$(QUESTION)"
+
+setup-secrets:
+	@echo "Setting up pre-commit hooks for secret detection..."
+	@mkdir -p scripts
+	@[ -f scripts/pre-commit-check.sh ] || cp scripts/pre-commit-check.sh.example scripts/pre-commit-check.sh 2>/dev/null || true
+	@chmod +x scripts/pre-commit-check.sh 2>/dev/null || true
+	@mkdir -p .git/hooks
+	@ln -sf ../../scripts/pre-commit-check.sh .git/hooks/pre-commit 2>/dev/null || true
+	@echo "Secret detection hooks installed. Run 'make setup-global-hooks' to apply to all repositories."
+
+setup-global-hooks:
+	@echo "Setting up global Git hooks for all repositories..."
+	@./scripts/setup-global-hooks.sh
+	@echo "Global hooks installed. Remember to run 'git init' in existing repositories to apply the template."

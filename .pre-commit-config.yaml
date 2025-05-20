@@ -1,0 +1,14 @@
+# Simple pre-commit configuration that focuses on secret detection
+# See https://pre-commit.com for more information
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+    -   id: detect-private-key  # Detects private keys
+-   repo: local
+    hooks:
+    -   id: check-for-secrets
+        name: Check for API keys and secrets
+        entry: scripts/pre-commit-check.sh
+        language: script
+        pass_filenames: false
