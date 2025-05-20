@@ -1,0 +1,19 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run Web Agent",
+            "type": "shell",
+            "command": "python",
+            "args": [
+                "main.py",
+                "https://example.com",
+                "What is the main topic?"
+            ],
+            "group": "build",
+            "problemMatcher": []
+        }
+    ]
+}
