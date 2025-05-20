@@ -1,7 +1,7 @@
 # Git Security Hooks
 
 This directory contains scripts to prevent accidental commits of secrets and sensitive data.
-These scripts are designed to be simple, minimalistic, and avoid unnecessary dependencies.
+These scripts are deliberately simple and focused on the most important security concerns.
 
 ## What these scripts do
 
@@ -12,12 +12,6 @@ These scripts are designed to be simple, minimalistic, and avoid unnecessary dep
 2. **Block .env files from being committed**
    - Only blocks exact `.env` files (not `.env.example` or other variants)
    - Environment files often contain API keys and secrets
-   - Use `.env.example` with empty values (not placeholders) as a template
-
-3. **Detect potential API keys in any committed file**
-   - Looks for patterns that might be API keys (20+ character alphanumeric strings)
-   - Note: This is a basic check and may have false positives on things like URLs
-   - You can override with `git commit --no-verify` if needed
 
 ## How to use
 
@@ -50,7 +44,7 @@ git init  # This applies the template, doesn't reinitialize
 
 - **pre-commit-check.sh**: The main script that contains all checks
   - Called by Git hooks before each commit
-  - Blocks secrets, sensitive files, and direct commits to main/master
+  - Blocks `.env` files and direct commits to main/master
 
 - **setup-global-hooks.sh**: Script to install hooks globally
   - Sets up Git templates that will be used for all repositories
