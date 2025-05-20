@@ -9,8 +9,8 @@
             "command": "python",
             "args": [
                 "main.py",
-                "https://example.com",
-                "What is the main topic?"
+                "https://en.wikipedia.org/wiki/Artificial_intelligence",
+                "What are the main ethical concerns about AI described on this page?"
             ],
             "group": "build",
             "problemMatcher": []
