@@ -67,6 +67,15 @@ cd /path/to/existing/repo
 git init  # This applies the template, doesn't reinitialize
 ```
 
+#### Complete global setup (all features)
+
+To set up all global files at once (Git hooks, VS Code settings, and Copilot instructions):
+
+```bash
+# Set up everything globally in one step
+make setup-global-all
+```
+
 For detailed verification steps and understanding how these hooks work, see the `VS_CODE_SETTINGS_DOC.md` file.
 
 ### How the Git hooks work

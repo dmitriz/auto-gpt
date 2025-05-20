@@ -57,7 +57,20 @@ git config --global --get init.templateDir
 
 ## How to Install/Recreate These Files
 
-If you need to recreate these files:
+### Option 1: All-in-one Setup
+
+You can set up all global files in a single step:
+
+```bash
+# Run the unified setup script
+bash scripts/setup-global-all.sh
+```
+
+This script will create all global files and configure everything in one go.
+
+### Option 2: Individual Setup
+
+If you prefer to set up components individually:
 
 1. For GitHub Copilot instructions and VS Code settings:
    - See detailed steps in `VS_CODE_SETTINGS_DOC.md`

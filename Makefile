@@ -1,7 +1,7 @@
 
 # .PHONY tells Make these targets don't create files with these names
 # This prevents issues if files with the same names exist
-.PHONY: setup run run-wikipedia run-news run-custom setup-secrets setup-global-hooks help
+.PHONY: setup run run-wikipedia run-news run-custom setup-secrets setup-global-hooks setup-global-all help
 
 # Help target shows available commands
 help:
@@ -9,6 +9,7 @@ help:
 	@echo "  make setup               - Set up the virtual environment and install dependencies"
 	@echo "  make setup-secrets       - Install local Git hook to prevent committing secrets"
 	@echo "  make setup-global-hooks  - Install global Git hooks for all repositories"
+	@echo "  make setup-global-all    - Set up all global files (Git hooks, VS Code settings, Copilot instructions)"
 	@echo "  make run                 - Run with example.com and a basic question"
 	@echo "  make run-wikipedia       - Run with Wikipedia AI article"
 	@echo "  make run-news            - Run with Hacker News"
@@ -60,3 +61,8 @@ setup-global-hooks:
 	# Run the script using bash (no need to make it executable)
 	@bash scripts/setup-global-hooks.sh
 	@echo "Global hooks installed. Remember to run 'git init' in existing repositories to apply the template."
+
+# Set up ALL global files (Git hooks, VS Code settings, Copilot instructions)
+setup-global-all:
+	@echo "Setting up all global files..."
+	@bash scripts/setup-global-all.sh
